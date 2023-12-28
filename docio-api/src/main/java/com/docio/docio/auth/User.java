@@ -1,8 +1,14 @@
 package com.docio.docio.auth;
 
+import javax.persistence.*;
 import java.time.Instant;
 
+@Entity
+@Table(name = "usersRepository")
+
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private Instant createdAt;
