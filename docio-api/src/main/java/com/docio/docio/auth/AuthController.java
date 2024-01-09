@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 @RestController
@@ -27,8 +28,18 @@ public class AuthController {
     }
 
     public static class SignupForm{
-        @NonNull
+        @NotNull
         @Email String email;
+
+        public SignupForm(){}
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
     }
 
 
