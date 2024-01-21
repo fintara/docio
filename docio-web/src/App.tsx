@@ -23,7 +23,13 @@ function About(){
 
 function Users(){
   return (
-    <span>This is users</span>
+    <div>
+      <span>This is users</span>
+      <form>
+        <input type="email" placeholder="email"></input>
+        <button>Sign up</button>
+      </form>
+    </div>
   )
 }
 
@@ -40,7 +46,7 @@ function App() {
               <Link to="/about">About</Link>
             </li>
             <li>
-              <Link to="/users">Sign in</Link>
+              <Link to="/users">Sign up</Link>
             </li>
           </ul>
         </nav>
