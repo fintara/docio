@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -22,12 +22,19 @@ function About(){
 }
 
 function Users(){
+
+  const [email, setEmail] = useState("")
+
+  function OnSubmit(e:FormEvent<HTMLFormElement>){
+    e.preventDefault()
+    console.log("Hello", email)
+  }
   return (
     <div>
       <span>This is users</span>
-      <form>
-        <input type="email" placeholder="email"></input>
-        <button>Sign up</button>
+      <form onSubmit={OnSubmit}>
+        <input type="email" placeholder="email" onChange={e=>setEmail(e.target.value)} value={email}></input>
+        <button type="submit">Sign up</button>
       </form>
     </div>
   )
