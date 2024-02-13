@@ -8,6 +8,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { error } from 'console';
 
 function Home(){
   return (
@@ -23,11 +24,21 @@ function About(){
 
 function Users(){
 
+  const [message, setMessage] = useState("")
   const [email, setEmail] = useState("")
 
   function OnSubmit(e:FormEvent<HTMLFormElement>){
     e.preventDefault()
     console.log("Hello", email)
+    fetch('/api/auth/signup',{
+      method: 'POST',
+      headers:{
+        'Content-type': 'application/json',
+      }, 
+      body:JSON.stringify({
+        email,
+      }),
+    }).then((res)=>res.json()).then((res)=>{setMessage(JSON.stringify(res))}).catch((error)=>{setMessage(error.toString())});
   }
   return (
     <div>
@@ -36,6 +47,7 @@ function Users(){
         <input type="email" placeholder="email" onChange={e=>setEmail(e.target.value)} value={email}></input>
         <button type="submit">Sign up</button>
       </form>
+      <p>{message}</p>
     </div>
   )
 }
