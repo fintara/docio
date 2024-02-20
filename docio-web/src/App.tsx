@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import {
@@ -8,7 +7,6 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { error } from 'console';
 
 function Home(){
   return (
@@ -38,7 +36,21 @@ function Users(){
       body:JSON.stringify({
         email,
       }),
-    }).then((res)=>res.json()).then((res)=>{setMessage(JSON.stringify(res))}).catch((error)=>{setMessage(error.toString())});
+    })
+    .then((res)=>{
+      console.log(res);
+      if(res.status === 200){ 
+      //=== has value and type; value1 === value2 eg: 
+      //   v1 === v2 => type(v1) == type(v2) && v1 == v2 
+      //   "200" == 200 // true
+      //   "200" === 200 // false
+      return res.json()}
+      else{
+        return res.text()
+      }
+    })
+    .then((res)=>{setMessage(JSON.stringify(res))})
+    .catch((error)=>{setMessage(error.toString())});
   }
   return (
     <div>
