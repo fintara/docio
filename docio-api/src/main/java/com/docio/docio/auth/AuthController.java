@@ -34,10 +34,6 @@ public class AuthController {
         }catch(DataIntegrityViolationException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists!");
         }
-
-        /*catch(SQLIntegrityConstraintViolationException e){
-               throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists!");
-        }*/
     }
 
     public static class SignupForm{
