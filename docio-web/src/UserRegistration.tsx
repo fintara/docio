@@ -31,7 +31,7 @@ export function UserRegistration() {
         }
       })
       .then((res) => { setMessage(JSON.stringify(res)); })
-      .catch((error) => { setMessage(error.toString()); });
+      .catch((error) => { setMessage(error.toString()); })
   }
   return (
     <div>
