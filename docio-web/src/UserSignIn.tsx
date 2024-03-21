@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 
-export function UserSignIn() {
+export function UserSignIn({onUserSignin}:any) {
 
     const [message, setMessage] = useState("");
     const [email, setEmail] = useState("");
@@ -29,6 +29,30 @@ export function UserSignIn() {
             });
     }
 
+    function onSignIn(){
+      fetch('/api/auth/signin', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            code: password,
+          })
+      }).then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          setMessage("Something went wrong!"); 
+        }else{
+          return res.text()
+        }
+      }).then((token)=>{
+        if(token){
+          onUserSignin(token);
+        }
+      });
+    }
+
     return <div>
         <input type="email" placeholder="email" onChange={e => setEmail(e.target.value)} value={email}></input>
          <br />       
@@ -42,7 +66,7 @@ export function UserSignIn() {
         }
         <br />
         {!hidePasswordField &&
-        <button type='button'>Sign in</button>
+        <button type='button' onClick={onSignIn}>Sign in</button>
         }
         <br />
     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import {
@@ -16,13 +16,14 @@ function Home(){
   )
 }
 
-function About(){
+function About({token}:any){
   return (
-    <span>This is about</span>
+    <span>This is about: {token}</span>
   )
 }
 
 function App() {
+  const [token, setToken] = useState(null);
   return (
     <Router>
       <div>
@@ -42,10 +43,10 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/about" element={<About />}/>
+          <Route path="/about" element={<About token={token} />}/>
           <Route path="/users" element={<UserRegistration />}/>
           <Route path="/" element={ <Home />}/>
-          <Route path="/signin" element={<UserSignIn/>}/>
+          <Route path="/signin" element={<UserSignIn onUserSignin={setToken}/>}/>
         </Routes>
       </div>
     </Router>
