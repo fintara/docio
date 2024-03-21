@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import {
@@ -24,6 +24,18 @@ function About({token}:any){
 
 function App() {
   const [token, setToken] = useState(null);
+
+  useEffect(()=>{
+    const t:any = localStorage.getItem("token");
+    if(t){
+      setToken(t)
+    }
+  }, [])
+  function onUserSignin(t:any){
+    localStorage.setItem("token", t);
+    setToken(t);
+  }
+
   return (
     <Router>
       <div>
@@ -46,7 +58,7 @@ function App() {
           <Route path="/about" element={<About token={token} />}/>
           <Route path="/users" element={<UserRegistration />}/>
           <Route path="/" element={ <Home />}/>
-          <Route path="/signin" element={<UserSignIn onUserSignin={setToken}/>}/>
+          <Route path="/signin" element={<UserSignIn onUserSignin={onUserSignin}/>}/>
         </Routes>
       </div>
     </Router>

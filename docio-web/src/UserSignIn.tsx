@@ -11,6 +11,7 @@ export function UserSignIn({onUserSignin}:any) {
     function onSubmit(){
         setSubmittedEmail(true);
         setHidePasswordField(false);
+        setMessage("");
         fetch('/api/auth/init', {
             method: 'POST',
             headers: {
@@ -30,6 +31,7 @@ export function UserSignIn({onUserSignin}:any) {
     }
 
     function onSignIn(){
+      setMessage("");
       fetch('/api/auth/signin', {
           method: 'POST',
           headers: {
