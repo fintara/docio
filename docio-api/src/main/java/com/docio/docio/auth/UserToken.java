@@ -4,18 +4,20 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "users")
-
-public class User {
+@Table(name = "user_token")
+public class UserToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @Column(nullable = false)
     private Instant createdAt;
+    @Column(nullable = false, unique = true)
+    private String token;
 
-    public User(){}
+    public UserToken(){}
 
     public Long getId() {
         return id;
@@ -25,12 +27,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Instant getCreatedAt() {
@@ -39,5 +41,13 @@ public class User {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

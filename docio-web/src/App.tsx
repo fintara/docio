@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import {
@@ -7,6 +7,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { UserRegistration } from './UserRegistration';
+import { UserSignIn } from './UserSignIn';
 
 function Home(){
   return (
@@ -14,57 +16,26 @@ function Home(){
   )
 }
 
-function About(){
+function About({token}:any){
   return (
-    <span>This is about</span>
-  )
-}
-
-function Users(){
-
-  const [message, setMessage] = useState("")
-  const [email, setEmail] = useState("")
-
-  function OnSubmit(e:FormEvent<HTMLFormElement>){
-    e.preventDefault()
-    console.log("Hello", email)
-    fetch('/api/auth/signup',{
-      method: 'POST',
-      headers:{
-        'Content-type': 'application/json',
-      }, 
-      body:JSON.stringify({
-        email,
-      }),
-    })
-    .then((res)=>{
-      console.log(res);
-      if(res.status === 200){ 
-      //=== has value and type; value1 === value2 eg: 
-      //   v1 === v2 => type(v1) == type(v2) && v1 == v2 
-      //   "200" == 200 // true
-      //   "200" === 200 // false
-      return res.json()}
-      else{
-        return res.text()
-      }
-    })
-    .then((res)=>{setMessage(JSON.stringify(res))})
-    .catch((error)=>{setMessage(error.toString())});
-  }
-  return (
-    <div>
-      <span>This is users</span>
-      <form onSubmit={OnSubmit}>
-        <input type="email" placeholder="email" onChange={e=>setEmail(e.target.value)} value={email}></input>
-        <button type="submit">Sign up</button>
-      </form>
-      <p>{message}</p>
-    </div>
+    <span>This is about: {token}</span>
   )
 }
 
 function App() {
+  const [token, setToken] = useState(null);
+
+  useEffect(()=>{
+    const t:any = localStorage.getItem("token");
+    if(t){
+      setToken(t)
+    }
+  }, [])
+  function onUserSignin(t:any){
+    localStorage.setItem("token", t);
+    setToken(t);
+  }
+
   return (
     <Router>
       <div>
@@ -79,13 +50,15 @@ function App() {
             <li>
               <Link to="/users">Sign up</Link>
             </li>
+            <Link to="/signin">Sign in</Link>
           </ul>
         </nav>
 
         <Routes>
-          <Route path="/about" element={<About />}/>
-          <Route path="/users" element={<Users />}/>
+          <Route path="/about" element={<About token={token} />}/>
+          <Route path="/users" element={<UserRegistration />}/>
           <Route path="/" element={ <Home />}/>
+          <Route path="/signin" element={<UserSignIn onUserSignin={onUserSignin}/>}/>
         </Routes>
       </div>
     </Router>
