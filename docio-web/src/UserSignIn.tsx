@@ -1,6 +1,10 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 
-export function UserSignIn({onUserSignin}:any) {
+type UserSignInProps = {
+  onUserSignin: (token: string) => void
+}
+
+export function UserSignIn({onUserSignin}: UserSignInProps) {
 
     const [message, setMessage] = useState("");
     const [email, setEmail] = useState("");
@@ -23,7 +27,7 @@ export function UserSignIn({onUserSignin}:any) {
             .then((res) => {
               console.log(res);
               if (res.status !== 200) {
-                setMessage("Something went wrong!"); 
+                setMessage("Something went wrong!");
                 setSubmittedEmail(false);
                 setHidePasswordField(true);
               }
@@ -44,7 +48,7 @@ export function UserSignIn({onUserSignin}:any) {
       }).then((res) => {
         console.log(res);
         if (res.status !== 200) {
-          setMessage("Something went wrong!"); 
+          setMessage("Something went wrong!");
         }else{
           return res.text()
         }
@@ -57,7 +61,7 @@ export function UserSignIn({onUserSignin}:any) {
 
     return <div>
         <input type="email" placeholder="email" onChange={e => setEmail(e.target.value)} value={email}></input>
-         <br />       
+         <br />
         {!submittedEmail &&
             <button type="button" onClick={onSubmit}>Submit</button>
         }

@@ -16,22 +16,26 @@ function Home(){
   )
 }
 
-function About({token}:any){
+type AboutProps = {
+  token: string | null
+}
+
+function About({token}: AboutProps){
   return (
     <span>This is about: {token}</span>
   )
 }
 
 function App() {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(()=>{
-    const t:any = localStorage.getItem("token");
+    const t = localStorage.getItem("token");
     if(t){
       setToken(t)
     }
   }, [])
-  function onUserSignin(t:any){
+  function onUserSignin(t: string){
     localStorage.setItem("token", t);
     setToken(t);
   }
