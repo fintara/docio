@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { UserRegistration } from './UserRegistration';
 import { UserSignIn } from './UserSignIn';
+import { DocSources } from './DocSources';
 
 function Home(){
   return (
@@ -49,6 +50,9 @@ function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
+              <Link to="/sources">Sources</Link>
+            </li>
+            <li>
               <Link to="/about">About</Link>
             </li>
             <li>
@@ -63,6 +67,7 @@ function App() {
           <Route path="/users" element={<UserRegistration />}/>
           <Route path="/" element={ <Home />}/>
           <Route path="/signin" element={<UserSignIn onUserSignin={onUserSignin}/>}/>
+          <Route path="/sources" element={<DocSources/>}/>
         </Routes>
       </div>
     </Router>
